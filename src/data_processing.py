@@ -4,12 +4,16 @@ from __future__ import annotations
 
 import re
 from pathlib import Path
+
 import nltk
 import pandas as pd
 from nltk.corpus import stopwords
 from nltk.sentiment import SentimentIntensityAnalyzer
 from scipy.sparse import spmatrix
 from sklearn.feature_extraction.text import TfidfVectorizer
+
+POSITIVE_THRESHOLD = 0.05
+NEGATIVE_THRESHOLD = -0.05
 
 
 def _ensure_nltk_resources() -> None:
@@ -43,9 +47,9 @@ def _clean_text(text: str, stop_words: set[str]) -> str:
 def _pseudo_label_tweet(text: str, analyzer: SentimentIntensityAnalyzer) -> str:
     """Create pseudo sentiment labels using VADER compound score."""
     compound = analyzer.polarity_scores(text)["compound"]
-    if compound > 0.05:
+    if compound > POSITIVE_THRESHOLD:
         return "positive"
-    if compound < -0.05:
+    if compound < NEGATIVE_THRESHOLD:
         return "negative"
     return "neutral"
 

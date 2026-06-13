@@ -10,6 +10,9 @@ from scipy.sparse import spmatrix
 from sklearn.linear_model import LogisticRegression
 from sklearn.feature_extraction.text import TfidfVectorizer
 
+MAX_TRAIN_SAMPLES = 500
+MAX_TEST_SAMPLES = 200
+
 
 def _slice_for_class(shap_values: shap.Explanation, class_index: int) -> shap.Explanation:
     """Slice SHAP explanation for a selected class in multiclass setups."""
@@ -39,8 +42,8 @@ def generate_shap_visualizations(
     destination = Path(results_dir)
     destination.mkdir(parents=True, exist_ok=True)
 
-    x_train_sample = x_train[: min(500, x_train.shape[0])]
-    x_test_sample = x_test[: min(200, x_test.shape[0])]
+    x_train_sample = x_train[: min(MAX_TRAIN_SAMPLES, x_train.shape[0])]
+    x_test_sample = x_test[: min(MAX_TEST_SAMPLES, x_test.shape[0])]
 
     feature_names = vectorizer.get_feature_names_out().tolist()
     explainer = shap.LinearExplainer(model, x_train_sample, feature_names=feature_names)
