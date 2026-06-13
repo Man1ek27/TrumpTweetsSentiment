@@ -12,6 +12,7 @@ from nltk.sentiment import SentimentIntensityAnalyzer
 from scipy.sparse import spmatrix
 from sklearn.feature_extraction.text import TfidfVectorizer
 
+# Standard VADER thresholds for three-way sentiment split.
 POSITIVE_THRESHOLD = 0.05
 NEGATIVE_THRESHOLD = -0.05
 

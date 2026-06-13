@@ -10,6 +10,7 @@ from scipy.sparse import spmatrix
 from sklearn.linear_model import LogisticRegression
 from sklearn.feature_extraction.text import TfidfVectorizer
 
+# Conservative caps to keep SHAP computations responsive on typical laptops.
 MAX_TRAIN_SAMPLES = 500
 MAX_TEST_SAMPLES = 200
 
