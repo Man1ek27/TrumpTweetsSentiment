@@ -4,12 +4,11 @@ from __future__ import annotations
 
 import re
 from pathlib import Path
-from typing import Tuple
-
 import nltk
 import pandas as pd
 from nltk.corpus import stopwords
 from nltk.sentiment import SentimentIntensityAnalyzer
+from scipy.sparse import spmatrix
 from sklearn.feature_extraction.text import TfidfVectorizer
 
 
@@ -54,7 +53,7 @@ def _pseudo_label_tweet(text: str, analyzer: SentimentIntensityAnalyzer) -> str:
 def prepare_dataset(
     csv_path: str | Path,
     max_features: int = 5000,
-) -> Tuple:
+) -> tuple[spmatrix, pd.Series, TfidfVectorizer, pd.DataFrame, str]:
     """Load CSV, generate pseudo-labels, clean text and vectorize with TF-IDF.
 
     Args:

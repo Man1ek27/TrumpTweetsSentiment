@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
+import pandas as pd
 from scipy.sparse import spmatrix
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import classification_report, confusion_matrix
@@ -17,13 +18,13 @@ class TrainingArtifacts:
     model: LogisticRegression
     x_train: spmatrix
     x_test: spmatrix
-    y_train: object
-    y_test: object
+    y_train: pd.Series
+    y_test: pd.Series
 
 
 def train_and_evaluate_model(
     features: spmatrix,
-    labels: object,
+    labels: pd.Series,
     test_size: float = 0.2,
     random_state: int = 42,
 ) -> TrainingArtifacts:
