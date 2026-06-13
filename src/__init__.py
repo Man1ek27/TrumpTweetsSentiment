@@ -1,0 +1,1 @@
+"""TrumpTweetsSentiment source package."""
