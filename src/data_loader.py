@@ -8,10 +8,28 @@ from pathlib import Path
 from kaggle.api.kaggle_api_extended import KaggleApi
 
 
-def _resolve_kaggle_config_path() -> Path:
-    """Return the expected Kaggle API key path."""
-    config_dir = Path(os.environ.get("KAGGLE_CONFIG_DIR", Path.home() / ".kaggle"))
-    return config_dir / "kaggle.json"
+def _resolve_kaggle_config_dir() -> Path:
+    """Return the expected Kaggle config directory."""
+    return Path(os.environ.get("KAGGLE_CONFIG_DIR", Path.home() / ".kaggle"))
+
+
+def _has_kaggle_credentials() -> bool:
+    """Return True if any supported Kaggle credential source is available."""
+    config_dir = _resolve_kaggle_config_dir()
+    kaggle_json = config_dir / "kaggle.json"
+    access_token = config_dir / "access_token"
+
+    has_legacy_env = bool(os.environ.get("KAGGLE_USERNAME")) and bool(
+        os.environ.get("KAGGLE_KEY")
+    )
+    has_token_env = bool(os.environ.get("KAGGLE_API_TOKEN"))
+
+    return (
+        kaggle_json.exists()
+        or access_token.exists()
+        or has_legacy_env
+        or has_token_env
+    )
 
 
 def download_trump_tweets(data_dir: str | Path = "data") -> Path:
@@ -26,11 +44,12 @@ def download_trump_tweets(data_dir: str | Path = "data") -> Path:
     Raises:
         FileNotFoundError: If Kaggle API credentials are missing or CSV is absent.
     """
-    kaggle_config = _resolve_kaggle_config_path()
-    if not kaggle_config.exists():
+    if not _has_kaggle_credentials():
+        config_dir = _resolve_kaggle_config_dir()
         raise FileNotFoundError(
-            "Missing Kaggle credentials. Expected file: "
-            f"{kaggle_config}. Place your kaggle.json there."
+            "Missing Kaggle credentials. Provide one of: "
+            f"{config_dir / 'kaggle.json'}, {config_dir / 'access_token'}, "
+            "or environment variables KAGGLE_API_TOKEN / KAGGLE_USERNAME + KAGGLE_KEY."
         )
 
     destination = Path(data_dir)
