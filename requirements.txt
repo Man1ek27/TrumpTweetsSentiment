@@ -4,3 +4,8 @@ shap==0.52.0
 nltk==3.9.4
 matplotlib==3.11.0
 kaggle==2.2.1
+transformers
+xgboost
+torch
+seaborn 
+wordcloud
