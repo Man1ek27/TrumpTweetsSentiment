@@ -31,7 +31,7 @@ def train_and_evaluate_model(features, labels, label_encoder, test_size=0.2, ran
         "Naiwny Bayes (MultinomialNB)": MultinomialNB(alpha=0.5), 
         "Regresja Logistyczna": LogisticRegression(C=2.0, max_iter=1000, random_state=random_state, n_jobs=-1),
         "Lasy Losowe (Tuned)": RandomForestClassifier(n_estimators=300, min_samples_split=5, n_jobs=-1, random_state=random_state),
-        "XGBoost (Tuned)": XGBClassifier(objective='multi:softprob', num_class=num_classes, max_depth=7, learning_rate=0.05, n_estimators=300, subsample=0.8, random_state=random_state, tree_method='gpu_hist', n_jobs=-1),
+        "XGBoost (Tuned)": XGBClassifier(objective='multi:softprob', num_class=num_classes, max_depth=7, learning_rate=0.05, n_estimators=300, subsample=0.8, random_state=random_state, n_jobs=-1),
         "Maszyny Wektorów Nośnych (LinearSVC)": LinearSVC(C=1.0, max_iter=2000, random_state=random_state)
     }
 
