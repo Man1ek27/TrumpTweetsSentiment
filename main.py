@@ -23,16 +23,16 @@ def main() -> None:
     artifacts = train_and_evaluate_model(features, labels, label_encoder)
     plot_confusion_matrix(model=artifacts.model, x_test=artifacts.x_test, y_test=artifacts.y_test, label_encoder=label_encoder, results_dir="results")
     
-    # print("\n--- Generowanie wykresów SHAP dla najlepszego modelu ---")
-    # generate_shap_visualizations(
-    #     model=artifacts.model,
-    #     x_train=artifacts.x_train,
-    #     x_test=artifacts.x_test,
-    #     vectorizer=vectorizer,
-    #     label_encoder=label_encoder,
-    #     results_dir="results",
-    # )
-    
+    print("\n--- Generowanie wykresów SHAP dla najlepszego modelu ---")
+    generate_shap_visualizations(
+        model=artifacts.model,
+        x_train=artifacts.x_train,
+        x_test=artifacts.x_test,
+        vectorizer=vectorizer,
+        label_encoder=label_encoder,
+        results_dir="results",
+    )
+
     print("Pipeline zakończony. Wykresy SHAP zostały zapisane w katalogu /results/.")
 
 
