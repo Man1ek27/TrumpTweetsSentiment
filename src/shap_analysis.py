@@ -90,7 +90,7 @@ def _plot_class_beeswarms(
             max_display=MAX_DISPLAY,
             plot_type="dot",
         )
-        plt.title(f"SHAP – emocja: „{class_name}"", fontsize=14)
+        plt.title(f"SHAP – emocja: '{class_name}'", fontsize=14)
         plt.tight_layout()
         fname = f"shap_beeswarm_{_safe_name(class_name)}.png"
         plt.savefig(destination / fname, dpi=300, bbox_inches="tight")
@@ -147,7 +147,7 @@ def _plot_waterfall_per_class(
         # Znajdź pierwszy przykład zaklasyfikowany jako ta klasa
         indices = np.where(y_pred == class_idx)[0]
         if len(indices) == 0:
-            print(f"  Brak przewidywań dla klasy „{class_name}" – pomijam waterfall.")
+            print(f"  Brak przewidywań dla klasy '{class_name}' – pomijam waterfall.")
             continue
         sample_idx = int(indices[0])
 
@@ -172,7 +172,7 @@ def _plot_waterfall_per_class(
 
         plt.figure(figsize=(12, 7))
         shap.waterfall_plot(explanation, max_display=MAX_DISPLAY, show=False)
-        plt.title(f"Wodospad SHAP – przykładowy tweet sklasyfikowany jako „{class_name}"", fontsize=12)
+        plt.title(f"Wodospad SHAP – przykładowy tweet sklasyfikowany jako '{class_name}'", fontsize=12)
         plt.tight_layout()
         fname = f"shap_waterfall_{_safe_name(class_name)}.png"
         plt.savefig(destination / fname, dpi=300, bbox_inches="tight")
